@@ -39,13 +39,19 @@ def check_text():
     try:
         # Strict prompt
         prompt = (
+            "You are a strict content moderation system.\n"
             "ONLY return one of the following JSON responses and nothing else:\n"
             '{"is_clean": true, "message": "The text is clean"}\n'
             'OR\n'
-            '{"is_clean": false, "message": "The text contains abusive language"}\n'
-            "DO NOT add any text or explanation. Return JSON only.\n\n"
+            '{"is_clean": false, "message": "The text contains abusive language"}\n\n'
+            "Rules:\n"
+            "- Mark as abusive ONLY if the text contains profanity, vulgarity, hate speech, or offensive slurs.\n"
+            "- DO NOT mark as abusive if the text contains criticism, negative opinion, or poor product reviews.\n"
+            "- Sentences like 'this product is bad' or 'I hate this service' are just opinions and NOT abusive.\n"
+            "- Return JSON only. DO NOT explain your answer or return any additional text.\n\n"
             f'Sentence: "{text}"'
         )
+
 
 
         response = model.generate_content(prompt)
